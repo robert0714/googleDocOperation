@@ -17,6 +17,7 @@ import com.google.api.services.drive.model.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Driver;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,6 +32,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
  
+
 
 
 
@@ -136,14 +138,17 @@ public class DriveCommandLineOffline {
 	  public static String uploadSampleFile(final Drive service){
 		  String fileId =null;
 		  try {
+			  	String mimeType ="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 				// Insert a file
 				File body = new File();
 				body.setTitle("My document 03");
 				body.setDescription("A test document");
-				body.setMimeType("text/plain");
-
-				java.io.File fileContent = new java.io.File("Z:/ISWork/EclipseWorkspace/workspace_441/test/src/com/iisigroup/document.txt");
-				FileContent mediaContent = new FileContent("text/plain", fileContent);
+//				body.setMimeType("text/plain");
+				body.setMimeType(mimeType);
+				
+				
+				java.io.File fileContent = new java.io.File("Z:/ISWork/EclipseWorkspace/workspace_441/GoogleDocPlay/src/main/java/com/iisigroup/JAVA處ManualCR_評估準則_查核表單.xlsx");
+				FileContent mediaContent = new FileContent(mimeType, fileContent);
 
 				File file = service.files().insert(body, mediaContent).execute();
 				file.setWritersCanShare(true);
@@ -164,6 +169,13 @@ public class DriveCommandLineOffline {
 				}
 				//https://developers.google.com/drive/v2/reference/permissions/insert
 				fileId =file.getId() ;
+				com.google.api.services.drive.model.Permission content=new com.google.api.services.drive.model.Permission();
+				content.setRole("writer");
+				content.setType("anyone");
+				content.setEmailAddress("iisi.sonar@gmail.com");
+				content.setFactory(JSON_FACTORY);
+				 
+				service.permissions().insert(fileId, content);
 				System.out.println("File ID: " + file.getId());
 
 		    } catch (IOException e) {

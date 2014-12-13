@@ -3,7 +3,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.iisigroup</groupId>
-	<artifactId>tech</artifactId>
+	<artifactId>automate.share.google.doc</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<!-- TODO project name -->
